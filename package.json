@@ -1,0 +1,26 @@
+﻿{
+  "name": "booking-monitor-bot",
+  "version": "0.1.0",
+  "private": true,
+  "description": "Telegram bot to monitor Booking.com prices for The Elements Hotel and competitors",
+  "main": "dist/index.js",
+  "scripts": {
+    "build": "tsc -p .",
+    "start": "node dist/index.js",
+    "dev": "ts-node --transpile-only index.ts",
+    "typecheck": "tsc -p . --noEmit"
+  },
+  "engines": { "node": ">=18" },
+  "dependencies": {
+    "express": "^4.19.2",
+    "node-cron": "^3.0.3",
+    "telegraf": "^4.16.3"
+  },
+  "devDependencies": {
+    "@types/express": "^4.17.21",
+    "@types/node": "^20.14.12",
+    "@types/node-cron": "^3.0.11",
+    "ts-node": "^10.9.2",
+    "typescript": "^5.5.4"
+  }
+}

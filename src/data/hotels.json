@@ -1,0 +1,12 @@
+﻿{
+  "base_hotel": { "name": "The Elements Hotel", "city": "Tashkent" },
+  "competitors": [
+    { "name": "Ramada Encore by Wyndham Tashkent" },
+    { "name": "Bentley Hotel Tashkent" },
+    { "name": "Sapiens Hotel" },
+    { "name": "Garnet Hotel Tashkent" },
+    { "name": "Hotel Inspira-S Tashkent" },
+    { "name": "LOTTE City Hotels Tashkent Palace" }
+  ],
+  "room_types": ["Single RO", "Single BB", "Double RO", "Double BB"]
+}

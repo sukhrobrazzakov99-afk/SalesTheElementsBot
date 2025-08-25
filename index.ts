@@ -1,0 +1,35 @@
+﻿import express from "express";
+import { json } from "express";
+import { getConfig, webhookPathFromToken } from "./src/config";
+import { createBot } from "./src/bot";
+import { createProvider } from "./src/provider";
+import { startScheduler } from "./src/scheduler";
+
+async function main() {
+  const cfg = getConfig();
+  const provider = createProvider(cfg.DATA_PROVIDER);
+  const bot = createBot(cfg, provider);
+
+  const app = express();
+  app.use(json());
+
+  const path = webhookPathFromToken(cfg.BOT_TOKEN);
+  const webhookUrl = `${cfg.WEBHOOK_URL}${path}`;
+
+  await bot.telegram.setWebhook(webhookUrl);
+  app.post(path, (req, res) => bot.handleUpdate(req.body, res));
+
+  app.get("/", (_req, res) => res.status(200).send("OK"));
+  app.get("/healthz", (_req, res) => res.status(200).send("OK"));
+
+  app.listen(cfg.PORT, () => {
+    console.log(`Server on :${cfg.PORT}, webhook: ${webhookUrl}`);
+  });
+
+  startScheduler(cfg, bot, provider);
+}
+
+main().catch((err) => {
+  console.error(err);
+  process.exit(1);
+});
