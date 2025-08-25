@@ -17,13 +17,13 @@ async function main() {
   const webhookUrl = `${cfg.WEBHOOK_URL}${path}`;
 
   // Сбрасываем старый вебхук и ставим новый
-  await bot.telegram.deleteWebhook({ drop_pending_updates: true }).catch(() => {});
+  try { await bot.telegram.deleteWebhook({ drop_pending_updates: true }); } catch {}
   const ok = await bot.telegram.setWebhook(webhookUrl);
   const info = await bot.telegram.getWebhookInfo();
   console.log("Webhook set:", ok, "to:", webhookUrl);
   console.log("Webhook info:", info);
 
-  // Роут вебхука (Telegraf handler)
+  // Роут вебхука
   app.use(path, (req, res) => {
     console.log("Incoming update at", new Date().toISOString());
     return (bot.webhookCallback(path) as any)(req, res);
@@ -37,7 +37,7 @@ async function main() {
     console.log(`Server on :${cfg.PORT}, webhook: ${webhookUrl}`);
   });
 
-  // Планировщик
+  // Планировщик ежедневной рассылки
   startScheduler(cfg, bot, provider);
 }
 
