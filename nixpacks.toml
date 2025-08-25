@@ -1,14 +1,11 @@
 ﻿[phases.setup]
-# Явно укажем Node 18
-nixPkgs = ["nodejs_18"]
+nixPkgs = ["nodejs_20"]
 
 [phases.install]
-# Быстрая и детерминированная установка
 cmds = ["npm ci || npm install"]
 
 [phases.build]
 cmds = ["npm run build"]
 
 [start]
-# Запуск уже собранного кода
-cmd = "npm start"
+cmd = "node dist/index.js"
